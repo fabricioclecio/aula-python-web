@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, render_template,
 import sqlite3
 
 DATABASE = "blog.bd"
@@ -23,4 +23,9 @@ def exibir_entradas():
     sql = "SELECT titulo, texto FROM entradas ORDER BY id DESC"
     cur = g.bd.execute(sql)
     entradas = []
-    return str(entradas)
+        for titulo, texto in cur.fetchall():
+            entradas.append ({
+                "titulo": titulo,
+                "texto": texto
+            })
+    return render_template("exibir_entradas.html", nome="guilherme")
